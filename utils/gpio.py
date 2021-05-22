@@ -6,7 +6,7 @@ Contains controls for Pi GPIO pins.
 
 import RPi.GPIO as GPIO
 
-import exceptions
+from utils import exceptions
 
 pins = {
     7: "PWMA",

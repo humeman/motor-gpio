@@ -71,3 +71,6 @@ def set_motor(motor, state):
 def stop():
     for pin in pins:
         GPIO.output(pin, GPIO.LOW)
+        
+def cleanup():
+    GPIO.cleanup()

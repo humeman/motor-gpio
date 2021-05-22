@@ -49,7 +49,7 @@ gpio.stop()
 ```
 
 ### Websocket example
-__**Server creation**__
+#### Server creation
 ```py
 from utils import ws, gpio
 
@@ -63,13 +63,15 @@ websocket = ws.WebsocketServer(
 websocket.start()
 ```
 
-__**Sending messages**__
+## Websocket
+
+### Sending messages
 
 Messages should all be sent in JSON format.
 To tell the socket what to do, specify the 'command' key.
 
-#### Valid messages
-__Turn on both motors__
+### Valid messages
+**Turn on both motors**
 ```js
 {
     "command": "set",
@@ -87,7 +89,7 @@ __Turn on both motors__
 }
 ```
 
-__Change standby state__
+**Change standby state**
 ```js
 {
     "command": "standby",
@@ -95,7 +97,7 @@ __Change standby state__
 }
 ```
 
-__Stop everything__
+**Stop everything**
 ```js
 {
     "command": "stop"

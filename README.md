@@ -50,23 +50,26 @@ gpio.stop()
 
 ### Websocket example
 __**Server creation**__
-```
-from utils import ws
+```py
+from utils import ws, gpio
+
+gpio.start()
 
 websocket = ws.WebsocketServer(
     requre_auth = True, # Enable/disable key authentication
     auth_keys = ["test"], # If auth is enabled, valid keys
     port = 5000 # Port to run on
 )
-
 websocket.start()
 ```
 
 __**Sending messages**__
+
 Messages should all be sent in JSON format.
 To tell the socket what to do, specify the 'command' key.
 
 __**Valid messages**__
+
 __Turn on both motors__
 ```js
 {

@@ -1,4 +1,6 @@
-from utils import ws
+from utils import ws, gpio
+
+gpio.setup()
 
 websocket = ws.WebsocketServer(
     requre_auth = True,

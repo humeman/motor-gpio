@@ -68,8 +68,7 @@ __**Sending messages**__
 Messages should all be sent in JSON format.
 To tell the socket what to do, specify the 'command' key.
 
-__**Valid messages**__
-
+#### Valid messages
 __Turn on both motors__
 ```js
 {

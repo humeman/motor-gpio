@@ -7,6 +7,7 @@ For more information, see docs/Socket.md
 
 import websockets
 import json
+import traceback
 import asyncio
 
 from utils import gpio
@@ -113,6 +114,7 @@ class WebsocketServer:
                 await self.registers[command](websocket, data)
 
             except:
+                traceback.print_exc()
                 await self.error(websocket, "An unexpected error occurred")
 
 class WebsocketParsers:
@@ -130,8 +132,15 @@ class WebsocketParsers:
         ):
 
         for key, key_type in keys.items():
-            if type(data.get(key)) != key_type:
+            if key not in data:
                 return False
+
+            if type(data[key]) != key_type:
+                try:
+                    key_type(data[key])
+
+                except:
+                    return False
 
         return True
 
@@ -151,24 +160,27 @@ class WebsocketRegisters:
                 await wsserver.error(websocket, "Motor must be a dict containing: id, state")
                 return
 
-            if not WebsocketParsers.bulk_verify(data, {"id": int, "state": str}):
+            if not WebsocketParsers.bulk_verify(motor, {"id": int, "state": str}):
                 await wsserver.error(websocket, "Missing keys: id, state")
                 return
 
-            if data["id"] not in gpio.motors:
-                await wsserver.error(websocket, f"Motor {data['id']} does not exist")
+            m_id = int(motor["id"])
+            m_state = int(motor["state"])
+
+            if m_id not in gpio.motors:
+                await wsserver.error(websocket, f"Motor {m_id} does not exist")
                 return
 
-            if data["state"] not in ["forward", "backward", "stop"]:
-                await wsserver.error(websocket, f"Invalid sate {data['state']}")
+            if m_state not in ["forward", "backward", "stop"]:
+                await wsserver.error(websocket, f"Invalid state {m_state}")
                 return
 
-            gpio.set_motor(data["id"], data["state"])
+            gpio.set_motor(m_id, m_state)
 
-            if data.get("autostart"):
-                gpio.standby(False)
+        if data.get("autostart"):
+            gpio.standby(False)
 
-            await wsserver.send(websocket, f"Set motor states")
+        await wsserver.send(websocket, f"Set motor states")
 
     async def standby(
             wsserver,

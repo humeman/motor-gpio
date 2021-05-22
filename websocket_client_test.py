@@ -51,10 +51,22 @@ class WebsocketClient:
             self
         ):
 
-        while True:
-            await asyncio.sleep(1) 
-            # Don't exit, but we don't have to send anything at the moment.
-            # Janky, I know. Just might need to actually use this later.
+        await self.set(
+            {1: "forward", 2: "forward"},
+            True
+        )
+
+        await asyncio.sleep(1)
+
+        await self.set(
+            {1: "backward", 2: "backward"},
+            True
+        )
+
+        await asyncio.sleep(1)
+
+        await self.standby(True)
+        await self.stop()
 
     async def set(
             self,

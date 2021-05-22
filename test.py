@@ -2,6 +2,8 @@ from utils import gpio
 import time
 
 # Basic test
+gpio.setup()
+
 gpio.standby(True)
 
 gpio.set_motor(1, "forward") # Set motor 1 to forward

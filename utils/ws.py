@@ -111,7 +111,7 @@ class WebsocketServer:
                 continue
 
             try:
-                await self.registers[command](websocket, data)
+                await self.registers[command](self, websocket, data)
 
             except:
                 traceback.print_exc()

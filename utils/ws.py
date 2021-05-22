@@ -165,7 +165,7 @@ class WebsocketRegisters:
                 return
 
             m_id = int(motor["id"])
-            m_state = int(motor["state"])
+            m_state = motor["state"]
 
             if m_id not in gpio.motors:
                 await wsserver.error(websocket, f"Motor {m_id} does not exist")

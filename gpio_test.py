@@ -23,3 +23,4 @@ gpio.standby(False)
 time.sleep(1)
 
 gpio.stop()
+gpio.cleanup()

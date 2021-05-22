@@ -14,6 +14,7 @@ Pinouts can be changed in `utils/gpio.py`. Default is:
     * STBY: 13
 
 ## Usage
+### Direct GPIO example
 ```py
 from utils import gpio
 
@@ -45,4 +46,56 @@ time.sleep(1)
 
 # Shut it down
 gpio.stop()
+```
+
+### Websocket example
+__**Server creation**__
+```
+from utils import ws
+
+websocket = ws.WebsocketServer(
+    requre_auth = True, # Enable/disable key authentication
+    auth_keys = ["test"], # If auth is enabled, valid keys
+    port = 5000 # Port to run on
+)
+
+websocket.start()
+```
+
+__**Sending messages**__
+Messages should all be sent in JSON format.
+To tell the socket what to do, specify the 'command' key.
+
+__**Valid messages**__
+__Turn on both motors__
+```js
+{
+    "command": "set",
+    "motors": [ // Don't have to specify both if you're not updating the state of the other.
+        {
+            "id": 1,
+            "state": "forward" // Can be 'forward', 'backward', or 'stop'
+        },
+        {
+            "id": 2,
+            "state": "backward"
+        }
+    ],
+    "autostart": true // Optional. If true, will automatically exit standby state.
+}
+```
+
+__Change standby state__
+```js
+{
+    "command": "standby",
+    "standby": true // Or false, of course. True = stop running, False = begin running
+}
+```
+
+__Stop everything__
+```js
+{
+    "command": "stop"
+}
 ```

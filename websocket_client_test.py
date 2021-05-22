@@ -27,8 +27,8 @@ class WebsocketClient:
             self.ip
         )
 
-        recv_task = asyncio.get_event_loop.create_task(self.recv())
-        send_task = asyncio.get_event_loop.create_task(self.send_loop())
+        recv_task = asyncio.get_event_loop().create_task(self.recv())
+        send_task = asyncio.get_event_loop().create_task(self.send_loop())
 
         done, pending = await asyncio.wait(
             [recv_task, send_task],

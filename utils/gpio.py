@@ -65,8 +65,9 @@ def set_motor(motor, state):
 
     elif state == "stop":
         # Reset all the pins
-        for pin in m.values():
-            GPIO.output(pin, GPIO.LOW)
+        for name, pin in m.items():
+            if name != "pwm":
+                GPIO.output(pin, GPIO.LOW)
 
     else:
         raise exceptions.InvalidState("State must be one of 'forward', 'backward', or 'stop'")

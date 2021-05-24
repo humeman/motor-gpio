@@ -69,6 +69,39 @@ class WebsocketClient:
 
         await asyncio.sleep(1)
 
+        # Try stop
+        await self.set(
+            [
+                {
+                    "id": 1,
+                    "state": "stop"
+                },
+                {
+                    "id": 2,
+                    "state": "stop"
+                }
+            ],
+            True
+        )
+
+        await asyncio.sleep(1)
+
+        # Try PWM stop
+        await self.set(
+            {
+                "id": 1,
+                "state": "forward",
+                "speed": 0
+            },
+            {
+                "id": 1,
+                "state": "forward",
+                "speed": 0
+            }
+        )
+
+        await asyncio.sleep(1)
+
         await self.set(
             [
                 {

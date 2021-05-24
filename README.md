@@ -1,5 +1,7 @@
-# motor-gpio
-Simple motor controller script for sending commands to a TB6612 motor controller on a Raspberry Pi. Nothing fancy, just needed a basic script to handle motor output.
+# rc-pi
+Motor controller script, featuring a full websocket client and server and direct interface utilities. 
+
+Designed for my Pi-based RC car project (see the Kivy app [here](https://github.com/humeman/rc-app)), but is easily usable for other motor control uses.
 
 Pinouts can be changed in `utils/gpio.py`. Default is:
 * Motor 1

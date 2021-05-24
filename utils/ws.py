@@ -35,7 +35,9 @@ class WebsocketServer:
         self.registers = {
             "set": WebsocketRegisters.set,
             "standby": WebsocketRegisters.standby,
-            "stop": WebsocketRegisters.stop
+            "stop": WebsocketRegisters.stop,
+            "shutdown": WebsocketRegisters.shutdown,
+            "reboot": WebsocketRegisters.reboot
         }
 
     def start( 
@@ -219,3 +221,35 @@ class WebsocketRegisters:
         gpio.stop()
 
         await wsserver.send(websocket, "Stopped controller")
+
+    async def shutdown(
+            wsserver,
+            websocket,
+            data
+        ):
+
+        # Normally requires root access.
+        # To enable these features:
+
+        # $ sudo vsudo
+        # Paste into the file somewhere, replacing [user] with your username:
+        #   [user] ALL=NOPASSWD:/sbin/reboot
+        #   [user] ALL=NOPASSWD:/sbin/shutdown
+
+        subprocess.call("sudo shutdown -h now")
+
+    async def reboot(
+            wsserver,
+            websocket,
+            data
+        ):
+
+        # Normally requires root access.
+        # To enable these features:
+
+        # $ sudo vsudo
+        # Paste into the file somewhere, replacing [user] with your username:
+        #   [user] ALL=NOPASSWD:/sbin/reboot
+        #   [user] ALL=NOPASSWD:/sbin/shutdown
+
+        subprocess.call("sudo reboot")

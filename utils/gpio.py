@@ -22,12 +22,12 @@ motors = {
     1: {
         "in1": 12,
         "in2": 11,
-        "pwm": GPIO.PWM(7, 60)
+        "pwm": 7
     },
     2: {
         "in1": 15,
         "in2": 16,
-        "pwm": GPIO.PWM(18, 60)
+        "pwm": 18
     }
 }
 
@@ -37,6 +37,9 @@ def setup():
 
     for pin in pins:
         GPIO.setup(pin, GPIO.OUT)
+
+    for motor in motors.values():
+        motor["pwm"] = GPIO.PWM(motor["pwm"], 60)
 
 def standby(state):
     if state:

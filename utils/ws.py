@@ -179,11 +179,11 @@ class WebsocketRegisters:
                 try:
                     speed = int(motor["speed"])
 
-                    if speed < 1 or speed > 255:
+                    if speed < 0 or speed > 100:
                         raise Exception
 
                 except:
-                    await wsserver.error(websocket, f"Speed must be an int between 1 and 255")
+                    await wsserver.error(websocket, f"Speed must be an int between 0 and 100")
                     return
 
                 # Set PWM pin

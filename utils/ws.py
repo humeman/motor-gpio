@@ -175,6 +175,20 @@ class WebsocketRegisters:
                 await wsserver.error(websocket, f"Invalid state {m_state}")
                 return
 
+            if "speed" in motor:
+                try:
+                    speed = int(motor["speed"])
+
+                    if speed < 1 or speed > 255:
+                        raise Exception
+
+                except:
+                    await wsserver.error(websocket, f"Speed must be an int between 1 and 255")
+                    return
+
+                # Set PWM pin
+                gpio.set_pwm(m_id, speed)
+
             gpio.set_motor(m_id, m_state)
 
         if data.get("autostart"):

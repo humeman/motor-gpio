@@ -52,14 +52,36 @@ class WebsocketClient:
         ):
 
         await self.set(
-            {1: "forward", 2: "forward"},
+            [
+                {
+                    "id": 1,
+                    "state": "forward",
+                    "speed": 100
+                },
+                {
+                    "id": 2,
+                    "state": "forward",
+                    "speed": 100
+                },
+            ],
             True
         )
 
         await asyncio.sleep(1)
 
         await self.set(
-            {1: "backward", 2: "backward"},
+            [
+                {
+                    "id": 1,
+                    "state": "backward",
+                    "speed": 25
+                },
+                {
+                    "id": 2,
+                    "state": "backward",
+                    "speed": 25
+                },
+            ],
             True
         )
 
@@ -70,19 +92,15 @@ class WebsocketClient:
 
     async def set(
             self,
-            motors: dict,
+            motors: list,
             autostart: bool = False
         ):
-
-        comp = [
-            {"id": motor_id, "state": state} for motor_id, state in motors.items()
-        ]
 
         await self.socket.send(
             json.dumps(
                 {
                     "command": "set",
-                    "motors": comp,
+                    "motors": motors,
                     "autostart": autostart,
                     **self.auth
                 }
@@ -118,7 +136,7 @@ class WebsocketClient:
         )
 
 websocket = WebsocketClient(
-    "ws://localhost:5000",
+    "ws://192.168.1.73:5000",
     key = "test"
 )
 

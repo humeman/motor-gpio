@@ -1,7 +1,12 @@
+# Archive Notice
+This repo has been archived, along with the app, [rcpi-app](https://github.com/humeman/rcpi-app). RCPi was a WiFi controlled open source RC car project, running on a Raspberry Pi Zero, controlled and viewed entirely through a phone app.
+
+---
+
 # rc-pi
 Motor controller script, featuring a full websocket client and server and direct interface utilities. 
 
-Designed for my Pi-based RC car project (see the Kivy app [here](https://github.com/humeman/rc-app)), but is easily usable for other motor control uses.
+Designed for my Pi-based RC car project (see the Kivy app [here](https://github.com/humeman/rcpi-app)), but is easily usable for other motor control uses.
 
 Pinouts can be changed in `utils/gpio.py`. Default is:
 * Motor 1
